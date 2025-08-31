@@ -1,0 +1,13 @@
+# Azure OpenAI Configuration
+AZURE_OPENAI_API_KEY=your_azure_openai_api_key_here
+AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com/
+AZURE_OPENAI_MODEL_DEPLOYMENT=gpt-5-nano
+AZURE_OPENAI_API_VERSION=2025-03-01-preview
+
+# Optional: Compliance Logging Configuration
+COMPLIANCE_LOG_DIR=compliance_logs
+ENABLE_COMPLIANCE_LOGGING=true
+
+# Optional: Application Configuration
+APP_ENV=development
+LOG_LEVEL=INFO
