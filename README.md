@@ -15,7 +15,7 @@ A production-ready Python application that demonstrates real-time streaming of A
 
 ```bash
 git clone the repository url
-cd ai-azure-test
+cd tabish-chatbot/api
 ```
 
 ### 2. Create Virtual Environment
@@ -64,26 +64,6 @@ APP_ENV=development
 LOG_LEVEL=INFO
 ```
 
-## 🖥️ CLI Application Usage
-
-### Interactive Mode
-
-```bash
-# Make sure virtual environment is activated
-source venv/bin/activate
-
-# Run the CLI application
-python azure_ai_test.py
-```
-
-The CLI will prompt you for questions interactively. Type `exit` to quit.
-
-### Command Line Mode
-
-```bash
-# Run with a specific question
-python azure_ai_test.py "What is the capital of France?"
-```
 
 ## 🌐 API Server Usage
 
@@ -94,7 +74,7 @@ python azure_ai_test.py "What is the capital of France?"
 source venv/bin/activate
 
 # Start the server
-uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 The API will be available at `http://localhost:8000`
@@ -104,13 +84,6 @@ The API will be available at `http://localhost:8000`
 #### Health Check
 ```bash
 curl http://localhost:8000/health
-```
-
-#### Chat Endpoint
-```bash
-curl -X POST "http://localhost:8000/chat" \
-  -H "Content-Type: application/json" \
-  -d '{"query": "What is the capital of France?"}'
 ```
 
 #### Streaming Chat Endpoint
@@ -149,11 +122,6 @@ print(response.json())
 ```bash
 # Health check
 curl http://localhost:8000/health
-
-# Regular chat
-curl -X POST "http://localhost:8000/chat" \
-  -H "Content-Type: application/json" \
-  -d '{"query": "What is 2+2?"}'
 
 # Streaming chat
 curl -X POST "http://localhost:8000/chat/stream" \
@@ -217,62 +185,6 @@ Each line in the JSONL file contains a JSON object with:
 - ✅ No hardcoded credentials
 - ✅ Configurable compliance logging
 
-## 🚀 Production Deployment
-
-### Docker Deployment
-
-Create a `Dockerfile` in the root directory:
-
-```dockerfile
-FROM python:3.11-slim
-
-WORKDIR /app
-
-# Copy requirements
-COPY api/requirements.txt .
-RUN pip install -r requirements.txt
-
-# Copy application files
-COPY . .
-
-EXPOSE 8000
-
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
-```
-
-### Cloud Deployment
-
-The API is ready for deployment on:
-- **Azure App Service**
-- **Google Cloud Run**
-- **AWS Lambda** (with modifications)
-- **Heroku**
-- **Railway**
-
-## 📈 Monitoring
-
-### Health Checks
-
-```bash
-curl http://localhost:8000/health
-```
-
-### Logs
-
-Check the compliance logs for detailed interaction history:
-
-```bash
-tail -f compliance_logs/session_*.jsonl
-```
-
-## 🛠️ Development
-
-### Adding New Features
-
-1. **CLI Application**: Modify `azure_ai_test.py`
-2. **API Server**: Modify `api/main.py`
-3. **Configuration**: Update environment variables
-4. **Dependencies**: Update `requirements.txt`
 
 ### Code Structure
 
@@ -283,33 +195,6 @@ The application uses a clean OOP structure:
 - `StreamingResponseProcessor`: Response handling
 - `AzureOpenAIApp`: Main orchestrator
 
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **Missing API Key**: Ensure `AZURE_OPENAI_API_KEY` is set in `.env`
-2. **Invalid Endpoint**: Check `AZURE_OPENAI_ENDPOINT` format
-3. **Model Not Found**: Verify `AZURE_OPENAI_MODEL_DEPLOYMENT` exists
-4. **Permission Errors**: Ensure write access to compliance log directory
-5. **Import Errors**: Make sure virtual environment is activated
-6. **Port Already in Use**: Change port or kill existing process
-
-### Debug Mode
-
-Set `LOG_LEVEL=DEBUG` in your `.env` file for additional logging information.
-
-### Virtual Environment Issues
-
-```bash
-# If you get import errors, ensure venv is activated
-source venv/bin/activate
-
-# If venv is corrupted, recreate it
-rm -rf venv
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
 
 ## 📄 License
 

@@ -21,9 +21,8 @@ A modern, production-ready starter template for React applications using Vite an
 
 ### Installation
 
-1. Clone this repository:
+1. Move to the frontend directory:
 ```bash
-git clone the repository url
 cd frontend
 ```
 

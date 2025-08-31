@@ -93,46 +93,6 @@ async def health_check():
         raise HTTPException(status_code=500, detail=f"Configuration error: {str(e)}")
 
 
-@app.post("/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
-    """
-    Process a chat request with chain of thought reasoning.
-    
-    This endpoint:
-    - Takes a user query and optional system prompt
-    - Returns the AI's reasoning process and final answer
-    - Maintains compliance logging
-    - Provides real-time streaming of the reasoning process
-    """
-    try:
-        # Initialize the Azure OpenAI app
-        app_instance = AzureOpenAIApp()
-        
-        # Process the request
-        result = app_instance.run(
-            user_query=request.query,
-            system_prompt=request.system_prompt
-        )
-        
-        # Prepare response
-        response = ChatResponse(
-            session_id=app_instance.session_id,
-            reasoning=result["reasoning"],
-            answer=result["answer"],
-            compliance_log=app_instance.logger.log_file,
-            timestamp=datetime.now().isoformat()
-        )
-        
-        return response
-        
-    except ValueError as e:
-        # Configuration errors
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        # General errors
-        raise HTTPException(status_code=500, detail=f"Processing error: {str(e)}")
-
-
 @app.post("/chat/stream")
 async def chat_stream(request: ChatRequest):
     """
